@@ -1,0 +1,8 @@
+pysrt
+moviepy
+psycopg2-binary
+PyQt5
+falcon
+waitress
+geojson
+falcon-cors

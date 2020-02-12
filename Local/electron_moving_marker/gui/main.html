@@ -1,0 +1,86 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+    <script src="js/logger.js"></script>
+    <script>switchConsoleToLogger()</script>
+    <script src="../dist/index.js"></script>
+    <script src="node_imports.js"></script>
+    <script src="moving_marker.js"></script>
+
+    <!--<script src="C:/electron_moving_marker/Backup/2 edit/2/electron_moving_marker/node_modules/leaflet/dist/leaflet.js"></script>-->
+
+    <link rel="stylesheet" href="main.css" type="text/css">
+
+</head>
+<body>
+
+<span id="ip4"></span>
+<div class="row ">
+      <div class="row">
+        <div class="input-field col s6">
+           <input type="text" id="username"  class="validate" required="required" >
+           <label for="username">Username</label>
+        </div>
+        <div class="input-field col s6">
+           <input id="password" type="password" class="validate" required="required"  >
+           <label for="password">Password</label>
+        </div>
+          <div class="input-field col s6">
+            <input type="text" id="databasename" class="validate" required="required"  >
+            <label for="databasename">DB Name</label>
+
+        </div>
+          <div class="input-field col s6">
+              <div class="row">
+                  <div class="input-field col s6" style="margin-top:0;">
+             <input type="text" id="ip" required="required"  >
+              <label for="ip">Host</label>
+                  </div>
+              <div class="input-field col s6">
+               <button style="margin-left: 120; padding-left:50 padding-right:50;" class="btn waves-effect waves-light" type="submit" name="action" id="databasebutton" onclick="databaseFields()" value="Submit Database Credentials" >Submit
+                <i class="material-icons right"></i>
+             </button>
+              </div>
+              </div>
+          </div>
+           <div class="input-field col s6">
+            <div class="file-field input-field">
+                      <div class="btn">
+                        <span>File</span>
+                             <input id="myFile" type="file" onChange="directorySelected()" webkitdirectory />                      </div>
+                      <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                      </div>
+                    </div>
+           <!--<input id="myFile" type="file" onchange="directorySelected()" webkitdirectory />-->
+           </div>
+
+         <div class="input-field col s12 m6" style="margin-top:28" >
+             <select  class="custom-select" id="menu" onchange="start_work()">
+              <option value="" disabled selected>Choose your video</option>
+            </select>
+            <label>Select Video</label>
+  </div>
+           </div>
+  </div>
+            <div class="row" id="border">
+                <div class="col s6 m6 l6">
+                    <div id="mapid"></div>
+                </div>
+            <div class="col s6 m6 l6">
+                    <video id="my_video_1" class="responsive-video"   controls data-setup='{ "playbackRates": [0.5, 1, 1.5, 2] }' onplay="play_vid()" onpause="pause_vid()" onseeked="video_seeked()" onended="end_vid()">
+              <source src="" type='video/mp4'>
+          </video>
+            </div>
+            </div>
+
+
+    <script src="worker.js"></script>
+
+    </body>
+

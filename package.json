@@ -1,0 +1,23 @@
+{
+  "name": "serverlocal",
+  "version": "1.0.0",
+  "description": "This electron app runs on data of both server and desktop",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SarmadAliQureshi/electron_local_server.git"
+  },
+  "author": "sarmad/salman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SarmadAliQureshi/electron_local_server/issues"
+  },
+  "homepage": "https://github.com/SarmadAliQureshi/electron_local_server#readme",
+  "devDependencies": {
+    "electron": "^8.0.0"
+  }
+}

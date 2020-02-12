@@ -1,0 +1,46 @@
+a = [{'user_': 'rauman.khan', 'table_name_': 'allkindpolygons'}, {'user_': 'rauman.khan', 'table_name_': 'asb_check_priority1'}, {'user_': 'rauman.khan', 'table_name_': 'asb_check_zoomlevel'}, {'user_': 'rauman.khan', 'table_name_': 'asb_house_duplication2'}, {'user_': 'rauman.khan', 'table_name_': 'bahria_roads_intersectios'}, {'user_': 'rauman.khan', 'table_name_': 'cartopoiidnull'}, {'user_': 'rauman.khan', 'table_name_': 'cpec_buffer'}, {'user_': 'rauman.khan', 'table_name_': 'cpec_routes'}, {'user_': 'rauman.khan', 'table_name_': 'data_qa_shams'}, {'user_': 'rauman.khan', 'table_name_': 'dc_house'}, {'user_': 'rauman.khan', 'table_name_': 'dc_pois'}, {'user_': 'rauman.khan', 'table_name_': 'dc_users'}, {'user_': 'rauman.khan', 'table_name_': 'house_no_streets_20m'}, {'user_': 'rauman.khan', 'table_name_': 'house_same_name'}, {'user_': 'rauman.khan', 'table_name_': 'house_same_name1'}, {'user_': 'rauman.khan', 'table_name_': 'karachi_saddar_video_track'}, {'user_': 'rauman.khan', 'table_name_': 'khi_roads_3'}, {'user_': 'rauman.khan', 'table_name_': 'kind4_intersect'}, {'user_': 'rauman.khan', 'table_name_': 'kind5_intersect'}, {'user_': 'rauman.khan', 'table_name_': 'kind5polygons'}, {'user_': 'rauman.khan', 'table_name_': 'mosque_join'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_applemaps_cartography'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_applemaps_house'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_applemaps_pois'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_applemaps_roads'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_applemaps_scale'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_dc_house'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_dc_pois'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_gps_house'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_gps_pois'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_heremaps_cartography'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_heremaps_house_partition_1'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_heremaps_house_partition_2'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_heremaps_house_partition_3'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_heremaps_house_partition_4'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_heremaps_pois_partition_1'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_heremaps_pois_partition_2'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_heremaps_pois_partition_3'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_heremaps_pois_partition_4'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_heremaps_roads_partition_1'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_heremaps_roads_partition_2'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_heremaps_roads_partition_3'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_heremaps_roads_partition_4'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_heremaps_scale'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_house_all_data'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_iqvia_2'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_iqvia_data'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_iqvia_data_images'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_iqvia_sample'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_iqvia_web'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_isl_duplicates'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_placeit'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_placeit_all_data'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_placeit_atd'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_placeit_house'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_placeit_pois_insert'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_placeit_pois_update'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_survey_gaps'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_temppois'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_tpledit_pois'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_video_tracks_all_data'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_web_stats_all'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_web_stats_monthly'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_weekly_data_source_stats'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_weekly_digitizer_stats'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_weekly_geo_codes_stats'}, {'user_': 'rauman.khan', 'table_name_': 'mvw_weekly_layer_stats'}, {'user_': 'rauman.khan', 'table_name_': 'numericstring'}, {'user_': 'rauman.khan', 'table_name_': 'pak_carto'}, {'user_': 'rauman.khan', 'table_name_': 'pak_house'}, {'user_': 'rauman.khan', 'table_name_': 'pak_pois'}, {'user_': 'rauman.khan', 'table_name_': 'pak_roads'}, {'user_': 'rauman.khan', 'table_name_': 'pak_scale'}, {'user_': 'rauman.khan', 'table_name_': 'pak_tehsils_20160909'}, {'user_': 'rauman.khan', 'table_name_': 'parco_r_buff'}, {'user_': 'rauman.khan', 'table_name_': 'poi_image'}, {'user_': 'rauman.khan', 'table_name_': 'poi_images'}, {'user_': 'rauman.khan', 'table_name_': 'poi_images1'}, {'user_': 'rauman.khan', 'table_name_': 'poi_images2'}, {'user_': 'rauman.khan', 'table_name_': 'poi_not_in_scale'}, {'user_': 'rauman.khan', 'table_name_': 'pois_dist_from_road_kli'}, {'user_': 'rauman.khan', 'table_name_': 'pois_roadname_in_address'}, {'user_': 'rauman.khan', 'table_name_': 'pois_roadname_in_address_20m'}, {'user_': 'rauman.khan', 'table_name_': 'pois_v6'}, {'user_': 'rauman.khan', 'table_name_': 'pois_v6_balochistan'}, {'user_': 'rauman.khan', 'table_name_': 'pois_v6_kpk'}, {'user_': 'rauman.khan', 'table_name_': 'pois_v6_punjab'}, {'user_': 'rauman.khan', 'table_name_': 'pois_v6_sindh'}, {'user_': 'rauman.khan', 'table_name_': 'polygon_error'}, {'user_': 'rauman.khan', 'table_name_': 'punjab_road'}, {'user_': 'rauman.khan', 'table_name_': 'punjab_roads_survey'}, {'user_': 'rauman.khan', 'table_name_': 'rescue_roads_buffer'}, {'user_': 'rauman.khan', 'table_name_': 'rescue_tpl_roads'}, {'user_': 'rauman.khan', 'table_name_': 'roads_quetta'}, {'user_': 'rauman.khan', 'table_name_': 'rural_roads'}, {'user_': 'rauman.khan', 'table_name_': 'sb_check_priority'}, {'user_': 'rauman.khan', 'table_name_': 'sb_current_dup_poi'}, {'user_': 'rauman.khan', 'table_name_': 'sb_current_dup_poi1'}, {'user_': 'rauman.khan', 'table_name_': 'sb_deprecate_prod'}, {'user_': 'rauman.khan', 'table_name_': 'sb_deprecate_prod1'}, {'user_': 'rauman.khan', 'table_name_': 'sb_deprecate_prod2'}, {'user_': 'rauman.khan', 'table_name_': 'sb_deprecate_prod3'}, {'user_': 'rauman.khan', 'table_name_': 'sb_dup_pak_pois'}, {'user_': 'rauman.khan', 'table_name_': 'sb_images_poi1'}, {'user_': 'rauman.khan', 'table_name_': 'sb_klir_images'}, {'user_': 'rauman.khan', 'table_name_': 'sb_pak_carto_poi_hospital'}, {'user_': 'rauman.khan', 'table_name_': 'sb_pois'}, {'user_': 'rauman.khan', 'table_name_': 'scale_reverse'}, {'user_': 'rauman.khan', 'table_name_': 'scale_simple'}, {'user_': 'rauman.khan', 'table_name_': 'scale_towns'}, {'user_': 'rauman.khan', 'table_name_': 'shams_error_reporting_carto'}, {'user_': 'rauman.khan', 'table_name_': 'sv_pois_materialized'}, {'user_': 'rauman.khan', 'table_name_': 'tpl_roads_buffer'}, {'user_': 'rauman.khan', 'table_name_': 'tplmaps_imagesqa'}, {'user_': 'rauman.khan', 'table_name_': 'vw_citynames_from_house'}, {'user_': 'rauman.khan', 'table_name_': 'vw_citynames_wkt_from_scale'}, {'user_': 'rauman.khan', 'table_name_': 'vw_lahore_view_pois'}, {'user_': 'rauman.khan', 'table_name_': 'vw_rauman.khan_pois_v6'}, {'user_': 'rauman.khan', 'table_name_': 'vw_rauman.khan_scale_polygons_v4'}, {'user_': 'rauman.khan', 'table_name_': 'vw_rauman_test'}, {'user_': 'rauman.khan', 'table_name_': 'vw_road_distance'}, {'user_': 'rauman.khan', 'table_name_': 'vw_streetsandwkt_from_zones_123'}, {'user_': 'rauman.khan', 'table_name_': 'vw_streetsandwkt_with_house_from_zones_123'}, {'user_': 'rauman.khan', 'table_name_': 'vw_tplcat_from_pois'}, {'user_': 'rauman.khan', 'table_name_': 'vw_zone123names_from_city'}, {'user_': 'rauman.khan', 'table_name_': 'vw_zones123_with_house'}, {'user_': 'rauman.khan', 'table_name_': 'zaka_carto_labels_v4'}, {'user_': 'rauman.khan', 'table_name_': 'zaka_pois_buffer_cnt'}, {'user_': 'rauman.khan', 'table_name_': 'zaka_pois_carto_intersect'}, {'user_': 'rauman.khan', 'table_name_': 'zaka_pois_same_name'}]
+
+for i in range(0,len(a)):
+    # print(i)
+    x = (a[i]['user_']    )
+    print(x)
+
+# import os
+# import re
+# '''
+# a = r'D:\sarmad\electron\local_project\rawdata\1000'
+# a=a.split('\\')
+# print(a)
+# for i in range(len(a)-1):
+#     print(i)
+#     if (i==0):
+#         x=a[i]
+#     else:
+#         x=x+'/'+a[i]
+# print(x)
+# '''
+# def PathSplit(path):
+#     print('check path',path)
+#     #path.replace('\\', '/')
+#     #print(path)
+#     path = path.split('/')
+#     print('check',path)
+#     #print(path)
+#     for i in range(len(path) - 1):
+#         if (i == 0):
+#             #print('enter in if')
+#             x = path[i]
+#         else:
+#             x = x + '/' + path[i]
+#     #print('exit')
+#     return x
+# #path=r'D:\sarmad\electron\local_project\rawdata\1000'
+# #print(path.replace('\\','/'))
+# print(PathSplit('D:/sarmad/electron/local_project/rawdata/1000'))
+# # import time
+# # import sys
+# #
+# # for i in range(5):
+# #     print(i),
+# #     sys.stdout.flush()
+# #     time.sleep(1)
