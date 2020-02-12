@@ -113,7 +113,7 @@ let options1 = {
     };
     console.log('options1')
 
-    PythonShell.run('csv to srt/get_Url.py',options1,  function  (err, api_results)  {
+    PythonShell.run('Server/electron_moving_marker/csv to srt/get_Url.py',options1,  function  (err, api_results)  {
     if  (err)  throw err;
     console.log('API results');
     console.log('API results', api_results);
@@ -235,7 +235,7 @@ function databaseFields(){
         pythonPath: 'python',
         args: [JSON.stringify(dbCredentials)]
     };
-    PythonShell.run('csv to srt/Db_check.py',options1_22,  function  (err, results)  {
+    PythonShell.run('Server/electron_moving_marker/csv to srt/Db_check.py',options1_22,  function  (err, results)  {
     fs.readFile('auth.txt', (err, data) => {
     if (err) throw err;
     console.log(data.toString())
@@ -304,7 +304,7 @@ let options1_2 = {
 
     console.log('options1_2')
     console.log(options1_2['args'])
-    PythonShell.run('csv to srt/csv_srt_converter.py',options1_2,  function  (err, results)  {
+    PythonShell.run('Server/electron_moving_marker/csv to srt/csv_srt_converter.py',options1_2,  function  (err, results)  {
     Swal.close()
 //    alert('SRT Files Inserted')
     srtFilesInsertedAlert();
@@ -345,7 +345,7 @@ let options1_2 = {
     };
     console.log('options1')
 
-    PythonShell.run('electron_moving_tracks/electron_moving_tracks/track_api.py',options1,  function  (err, api_results)  {
+    PythonShell.run('Server/electron_moving_marker/electron_moving_tracks/electron_moving_tracks/track_api.py',options1,  function  (err, api_results)  {
     if  (err)  throw err;
     console.log('API results');
     console.log('API results', api_results);
