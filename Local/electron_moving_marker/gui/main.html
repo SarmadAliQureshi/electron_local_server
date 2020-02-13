@@ -6,8 +6,6 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
-    <script src="js/logger.js"></script>
-    <script>switchConsoleToLogger()</script>
     <script src="../dist/index.js"></script>
     <script src="node_imports.js"></script>
     <script src="moving_marker.js"></script>
@@ -23,22 +21,22 @@
 <div class="row ">
       <div class="row">
         <div class="input-field col s6">
-           <input type="text" id="username"  class="validate" required="required" >
+           <input type="text" id="username"  class="validate" required="required" value="postgres">
            <label for="username">Username</label>
         </div>
         <div class="input-field col s6">
-           <input id="password" type="password" class="validate" required="required"  >
+           <input id="password" type="password" class="validate" required="required"  value="postgres" >
            <label for="password">Password</label>
         </div>
           <div class="input-field col s6">
-            <input type="text" id="databasename" class="validate" required="required"  >
+            <input type="text" id="databasename" class="validate" required="required"  value="postgres" >
             <label for="databasename">DB Name</label>
 
         </div>
           <div class="input-field col s6">
               <div class="row">
                   <div class="input-field col s6" style="margin-top:0;">
-             <input type="text" id="ip" required="required"  >
+             <input type="text" id="ip" required="required"  value="localhost" >
               <label for="ip">Host</label>
                   </div>
               <div class="input-field col s6">
