@@ -19,5 +19,14 @@
   "homepage": "https://github.com/SarmadAliQureshi/electron_local_server#readme",
   "devDependencies": {
     "electron": "^8.0.0"
+  },
+  "dependencies": {
+    "1.0.2": "^1.0.0",
+    "leaflet": "^1.5.1",
+    "leaflet-moving-marker": "^0.3.0",
+    "leaflet-rotatedmarker": "^0.2.0",
+    "materialize-css": "^1.0.0",
+    "node-localstorage": "^2.1.4",
+    "python-shell": "^1.0.8"
   }
 }
