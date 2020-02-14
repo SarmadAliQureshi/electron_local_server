@@ -155,6 +155,7 @@ function databaseFields(){
     dbCredentials.password = upass;
     dbCredentials.ip = dbip;
     dbCredentials.username = uname;
+    console.log("My dbcredentials : ", dbCredentials)
       let options1_22 = {
         mode: 'text',
         pythonPath: 'python',
@@ -184,9 +185,15 @@ function databaseFields(){
 
 function directorySelected() {
     var  selectedDirectory = document.getElementById("myFile").files[0].path.split('\\').join('/')
-
+    selectedDirectory = selectedDirectory.split('/')
+    var newdir=[];
+    for (i=0;i<selectedDirectory.length-1;i++){
+        newdir.push(selectedDirectory[i])
+    }
     // push_foler_value(a);
+    selectedDirectory = newdir.join('/')
     console.log('DIR PATH', selectedDirectory)
+//    selectedDirectory = 'D:/sarmad/electron/local_project/rawdata/new'
 
     fs.readdir(selectedDirectory, function (err, files) {
         //handling error
@@ -210,9 +217,10 @@ function directorySelected() {
             // console.log("The file list ",files_list);
 
         });
-        console.log('In push items')
+        console.log('In push items',files_name)
         push_items(files_name);
         console.log('In push items 1')
+//        document.getElementById('myFile').value="hyy"
     });
 
 
@@ -220,9 +228,10 @@ function directorySelected() {
     let options1_2 = {
         mode: 'text',
         pythonPath: 'python',
+//        args:['D:/sarmad/electron/local_project/rawdata/new',JSON.stringify(dbCredentials)]
         args: [selectedDirectory, JSON.stringify(dbCredentials)]
     };
-
+    console.log('selected DIR ',selectedDirectory)
     console.log('options1_2')
     console.log(options1_2['args'])
     PythonShell.run('Local/electron_moving_marker/csv to srt/csv_srt_converter.py',options1_2,  function  (err, results)  {
