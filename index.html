@@ -7,11 +7,47 @@
   </head>
   <body>
 
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
      <div align="left">
-          <button type="button" class="btn btn-warning hell" onclick="location.href='Local/electron_moving_marker/gui/main.html';" aria-haspopup="true" aria-expanded="false" style="width:50%"><font size="6">LOCAL</font></button>
-          <button type="button" class="btn btn-success" onclick="location.href='Server/electron_moving_marker/gui/main.html';" aria-haspopup="true" aria-expanaded="false" style="width:50%"><font size="6">SERVER</font>
-          </button>
+          <!--<button type="button" class="btn btn-warning hell" onclick="location.href='Local/electron_moving_marker/gui/main.html';" aria-haspopup="true" aria-expanded="false" style="width:50%"><font size="6">LOCAL</font></button>-->
+          <!--<button type="button" class="btn btn-success" onclick="location.href='Server/electron_moving_marker/gui/main.html';" aria-haspopup="true" aria-expanaded="false" style="width:50%"><font size="6">SERVER</font></button>-->
+         <!---->
+         <div class="row center">
+            <div  style="height:50%">
+              <img width="70%" src="tplmapslogo.png" alt=""  >
+              <br><br>
+            </div>
+         </div>
+            <div class="row center">
+            <div class="col s12 m10 offset-m1">
+              <h3 class="header">Video Survey Q/A</h3>
+            </div>
+            <div class="col s12 m8 offset-m2">
+              <h4 class="light">Where is your video survey data located?</h4>
+            </div>
+            </div>
+
+          </div>
+            <div class="row center">
+                <div class="col s12 m3 l3">
+                </div>
+
+                <div class="col s12 m3 l3">
+                    <a onclick="location.href='Server/electron_moving_marker/gui/main.html';" id="download-button" class="btn-large waves-effect waves-light" style="padding:0 4rem 0 4rem;margin-bottom:1.5rem;">Server</a>
+                </div>
+                <div class="col s12 m3 l3">
+                    <a onclick="location.href='Local/electron_moving_marker/gui/main.html';" id="upgrade-button" class="btn-large waves-effect waves-light" style="padding:0 4rem 0 4rem; ">Local</a>
+                </div>
+                 <div class="col s12 m3 l3">
+                </div>
+
+
+            <!--<button type="button" class="btn btn-warning hell" onclick="location.href='Local/electron_moving_marker/gui/main.html';" aria-haspopup="true" aria-expanded="false" style="width:50%"><font size="6">LOCAL</font></button>-->
+            <!--<button type="button" class="btn btn-success" onclick="location.href='Server/electron_moving_marker/gui/main.html';" aria-haspopup="true" aria-expanaded="false" style="width:50%"><font size="6">SERVER</font></button>-->
+          </div>
      </div>
   </body>
   </html>
