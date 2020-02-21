@@ -1,3 +1,4 @@
+var Tangram = require('tangram')
 var locations = []
 var playVideo = false
 var marker = null;
@@ -5,7 +6,65 @@ var line = null;
 var duration = null;
 var markerarray = []
 var video_paused = false
+authenticity=false
 var check_secondexecution = false
+var enter_database_credentials = false
+function rightDatabaseCredentialsAlert(){
+  console.log("IN : rightDatabaseCredentialsAlert")
+  enter_database_credentials = true
+  Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Right Database Credentials! ',
+  showConfirmButton: false,
+  timer: 1500
+
+    })
+
+
+}
+function selectServerAlert(){
+Swal.fire({
+  title: 'Please select the server',
+  icon: 'warning',
+  showCancelButton: false,
+  confirmButtonColor: '#3085d6',
+  })
+
+}
+
+function insertionAlert(){
+
+      let timerInterval
+      var timer;
+      Swal.fire({
+//      title:'<p style="color:#2ca59a;"> Right Database Credentials! </p>',
+//      title: 'Inserting SRT files in database',
+      html: '<h5>Inserting SRT files in the database</h5> <br> Please wait....',
+      timer: timer,
+      timerProgressBar: true,
+      onBeforeOpen: () => {
+      Swal.showLoading()
+  }
+})
+}
+
+function srtFilesInsertedAlert(){
+  Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'SRT Files Inserted!',
+  showConfirmButton: false,
+  timer: 1500,
+  onDestroy: function(){
+    var elmnt = document.getElementById("video-items");
+    elmnt.scrollIntoView();
+  }
+    })
+
+
+}
+
 var Icon = L.DivIcon.extend({
     createIcon: function() {
         // outerDiv.style.transform is updated by Leaflet
@@ -167,23 +226,42 @@ function databaseFields(){
     console.log(data.toString())
     if(data.toString()=="False"){
     console.log('check if')
-    alert('Wrong Database Credentials')
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Wrong Database Credentials!',
+    })
     }
     else{
     console.log('check else')
-    alert('Right Database Credentials')
+//    alert('Right Database Credentials')
+//    insertionAlert()
+    rightDatabaseCredentialsAlert()
+    authenticity = true;
     }
 })
     if  (err)  throw err;
 
     console.log('SRT_converted!.');
     console.log('results', results);
+
     });
 
     console.log(uname,upass,dbname,dbip);
 }
 
 function directorySelected() {
+    if (enter_database_credentials!=true){
+        console.log('one');
+        selectServerAlert();
+        document.getElementById('myFile').value = '';
+        console.log("LOG : ",document.getElementById('myFile').value)
+        return null
+
+
+    }
+
+
     var  selectedDirectory = document.getElementById("myFile").files[0].path.split('\\').join('/')
     selectedDirectory = selectedDirectory.split('/')
     var newdir=[];
@@ -234,8 +312,12 @@ function directorySelected() {
     console.log('selected DIR ',selectedDirectory)
     console.log('options1_2')
     console.log(options1_2['args'])
+    insertionAlert();
     PythonShell.run('Local/electron_moving_marker/csv to srt/csv_srt_converter.py',options1_2,  function  (err, results)  {
-    alert('SRT Files Inserted')
+//    alert('SRT Files Inserted')
+    Swal.close()
+////    alert('SRT Files Inserted')
+    srtFilesInsertedAlert();
 
     if  (err)  throw err;
     console.log('SRT_converted!.');
@@ -258,8 +340,15 @@ function directorySelected() {
     });
 
         // return 'suvyuv';
+    console.log('two');
 
 
+
+//else{
+//
+////enter_database_credentials=false
+//
+//}
 
 }
 
@@ -359,10 +448,58 @@ select = document.getElementById('menu');
 
 var track_started = false;
 var map = L.map('mapid').setView([30.3753, 69.3451], 5);
+L.control.measure({
+  position: 'topleft'
+}).addTo(map)
 L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
     maxZoom: 20,
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 }).addTo(map);
+
+//adding map layers
+
+var basemap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',});
+
+var basemap2 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+attribution: '&copy; <a href="http://osm.org/copyright">Google</a> contributors',});
+
+var basemap3 = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+maxZoom: 20,
+subdomains:['mt0','mt1','mt2','mt3']
+});
+
+var basemap4 = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+maxZoom: 20,
+subdomains:['mt0','mt1','mt2','mt3']
+});
+
+var tpl = "http://172.16.130.52:8016/tplmaps/tplscene.js";
+  var tplbasemap = Tangram.leafletLayer({
+      scene: tpl,
+      modifyScrollWheel: false,
+    });
+//var tpl = "http://172.16.44.80:8020/tplmaps/tplscene.js";
+//  var tplbasemap = Tangram.leafletLayer({
+//      scene: tpl,
+//      modifyScrollWheel: false
+//    });
+
+
+
+
+
+  var baseMaps = {
+    "OpenStreet": basemap,
+    "Google Satellite": basemap2,
+    "Google Street" : basemap3,
+    "Google Terrain" : basemap4,
+    "TPL Maps" : tplbasemap
+  };
+L.control.layers(baseMaps, marker, {position: 'bottomright', autoZIndex: true}).addTo(map);
+
+
+
 
 var myMovingMarker = null;
 var myIcon = L.icon({

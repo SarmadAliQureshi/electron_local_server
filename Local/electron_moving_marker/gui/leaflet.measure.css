@@ -1,0 +1,44 @@
+.leaflet-control-measure {
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 21px;
+	color:red;
+	}
+
+.leaflet-bar-part-top-and-bottom {
+	-webkit-border-radius: 4px 4px 4px 4px;
+	        border-radius: 4px 4px 4px 4px;
+	border-bottom: none;
+	}
+
+.leaflet-touch .leaflet-bar-part-top-and-bottom {
+	-webkit-border-radius: 7px 7px 7px 7px;
+	        border-radius: 7px 7px 7px 7px;
+	border-bottom: none;
+	}
+
+.leaflet-control-measure-on .leaflet-control-measure {
+	box-shadow: 0 0 8px rgba(10,10,10,1.0);
+	}
+
+.leaflet-measure-tooltip {
+
+	font: 28px/1.25 "Helvetica Neue", Arial, Helvetica, sans-serif;
+	background-color: rgb(255, 102, 102,0.8);
+	box-shadow: 0 0 5px #BBB;
+	margin: 0;
+	padding: 2px;
+	width: auto !important;
+	height: auto !important;
+	white-space: nowrap;
+	color:red;
+	}
+
+.leaflet-measure-tooltip-total {
+	color:red;
+	font-size:1.5rem
+	}
+
+.leaflet-measure-tooltip-difference {
+	color: #777;
+	}

@@ -27,6 +27,7 @@
     "leaflet-rotatedmarker": "^0.2.0",
     "materialize-css": "^1.0.0",
     "node-localstorage": "^2.1.4",
-    "python-shell": "^1.0.8"
+    "python-shell": "^1.0.8",
+    "tangram": "^0.20.0"
   }
 }
