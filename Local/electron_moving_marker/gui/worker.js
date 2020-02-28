@@ -1,4 +1,4 @@
-var Tangram = require('tangram')
+//var Tangram = require('tangram')
 var locations = []
 var playVideo = false
 var marker = null;
@@ -9,6 +9,9 @@ var video_paused = false
 authenticity=false
 var check_secondexecution = false
 var enter_database_credentials = false
+
+
+
 function rightDatabaseCredentialsAlert(){
   console.log("IN : rightDatabaseCredentialsAlert")
   enter_database_credentials = true
@@ -25,7 +28,7 @@ function rightDatabaseCredentialsAlert(){
 }
 function selectServerAlert(){
 Swal.fire({
-  title: 'Please select the server',
+  title: 'Please submit the credentials first!',
   icon: 'warning',
   showCancelButton: false,
   confirmButtonColor: '#3085d6',
@@ -86,11 +89,18 @@ var Icon = L.DivIcon.extend({
 
 console.log('check 2')
 var icon = new Icon();
+
 function parse_json(text) {
     console.log('parse_json')
 
     geojson = JSON.parse(text);
     map.setView(geojson.start,17);
+    if (marker!=null){
+        marker.pause()
+        map.removeLayer(marker)
+//        marker=null
+    }
+
     locations = geojson.line
     console.log('above second execution')
     line  = geojson.linestring;
@@ -102,7 +112,7 @@ function parse_json(text) {
     secondexecution(locations);
     markerarray.push(marker);
     console.log('array : ',markerarray);
-   
+
 }
 
 
@@ -130,6 +140,7 @@ marker = L.movingMarker([given_line[0].lat, given_line[0].lng], {
     }),
     icon: icon,
 });
+marker.pause()
 if (check_secondexecution==false)
 {
     video_paused = true
@@ -155,13 +166,13 @@ marker.on('destination', function(destination) {
         icon.rotate(destination.bearing);
     }
 });
-
+//marker.pause();
 marker.addTo(map);
-marker.pause();
+//marker.pause();
 z=18
 z = map.getZoom()
 map.setView(L.latLng(given_line[0].lat, given_line[0].lng), z);
-
+pause_vid()
 }
 
 function pause_vid() {
@@ -363,6 +374,7 @@ var a = document.getElementById('input-folder-1').value;
 console.log('the file is ', a);
 }
 function start_work() {
+//    map.removeLayer(marker)
     check_secondexecution = false
     console.log('start work')
 
@@ -373,9 +385,12 @@ function start_work() {
 
 }
     if(marker !== null){
+      console.log('marker before null ',marker)
+//      console.log("map : ",map)
       marker.pause()
       map.removeLayer(marker)
       marker = null
+//      console.log('marker after null ',marker)
     }
 
     var video = document.getElementById('my_video_1');
@@ -474,11 +489,11 @@ maxZoom: 20,
 subdomains:['mt0','mt1','mt2','mt3']
 });
 
-var tpl = "http://172.16.130.52:8016/tplmaps/tplscene.js";
-  var tplbasemap = Tangram.leafletLayer({
-      scene: tpl,
-      modifyScrollWheel: false,
-    });
+//var tpl = "http://172.16.130.52:8016/tplmaps/tplscene.js";
+//  var tplbasemap = Tangram.leafletLayer({
+//      scene: tpl,
+//      modifyScrollWheel: false,
+//    });
 //var tpl = "http://172.16.44.80:8020/tplmaps/tplscene.js";
 //  var tplbasemap = Tangram.leafletLayer({
 //      scene: tpl,
@@ -494,7 +509,6 @@ var tpl = "http://172.16.130.52:8016/tplmaps/tplscene.js";
     "Google Satellite": basemap2,
     "Google Street" : basemap3,
     "Google Terrain" : basemap4,
-    "TPL Maps" : tplbasemap
   };
 L.control.layers(baseMaps, marker, {position: 'bottomright', autoZIndex: true}).addTo(map);
 
