@@ -12,6 +12,12 @@ import json
 import ast
 import sys
 
+path=os.path.abspath(os.curdir)
+file1 = open(path+"\\MyFile.txt", "r")
+temp=json.load(file1)
+print(temp)
+table_  = temp['table_name']
+file1.close()
 
 cors = CORS(allow_all_origins=True, allow_all_headers=True, allow_credentials_all_origins=True, allow_all_methods=True)
 directory = os.path.dirname(__file__)
@@ -51,10 +57,10 @@ class Tracker:
             # by using the variable on which database connection was stored, i.e. main_database database is queried-
             # -duration_query from the configuratio.py file run on the filename, i.e. fname
             # in db_response variable we get the duration time of the video
-            db_response = main_database.DbResultsQuery(conf.duration_query.format(fname))
+            db_response = main_database.DbResultsQuery(conf.duration_query.format(fname,table_))
         except INTERNAL_ERROR:
             main_database.refreshDbConenction()
-            db_response = main_database.DbResultsQuery(conf.duration_query.format(fname))
+            db_response = main_database.DbResultsQuery(conf.duration_query.format(fname,table_))
         # This is the print of db_response[0][0] -- 0:20:17 i.e. duration_min variable value
         duration_min = db_response[0][0]  #duration in minutes
         # Convert minutes into seconds
@@ -72,10 +78,10 @@ class Tracker:
 
         try:
             # in db_response variable we get the results( linestring, length )from the track_query which is written in configuration file
-            db_response = main_database.DbResultsQuery(conf.track_query.format(fname))
+            db_response = main_database.DbResultsQuery(conf.track_query.format(fname,table_))
         except INTERNAL_ERROR:
             main_database.refreshDbConenction()
-            db_response = main_database.DbResultsQuery(conf.track_query.format(fname))
+            db_response = main_database.DbResultsQuery(conf.track_query.format(fname,table_))
         # db_response is in form of tuple (line,length) so we have to fetch line only and store it in variable track_geojson
         # print(db_response)
         track_geojson = json.loads(db_response[0][0])
@@ -92,8 +98,8 @@ class Tracker:
         start_point = [track_geojson['coordinates'][0][1], track_geojson['coordinates'][0][0]]
         # end_point = [track_geojson['coordinates'][-1][1], track_geojson['coordinates'][-1][0]]
         duration, duration_seconds = self.get_duration(limit=len(track_list)-1, fname=fname) ## duration= dur_list
-        bearing = main_database.DbResultsQuery(conf.bearing.format(fname))
-        datetime = main_database.DbResultsQuery(conf.datetime.format(fname))
+        bearing = main_database.DbResultsQuery(conf.bearing.format(fname, table_))
+        datetime = main_database.DbResultsQuery(conf.datetime.format(fname, table_))
         print("date , ",datetime)
         print("track ", track_list)
         li=[{"lat":v[0],"recorded_at_ms":datetime[i][0]*1000,"lng":v[1],"bearing":bearing[i][0]} for i,v in enumerate(track_list)]

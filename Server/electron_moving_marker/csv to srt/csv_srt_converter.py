@@ -1,5 +1,6 @@
-import pysrt
+import calendar
 from datetime import datetime as dt
+import pysrt
 import configurations as conf
 # from Main_variable import Variable
 from Main_variable import Variable
@@ -13,8 +14,28 @@ import subprocess
 # import text_extractor
 import sys
 import json
+import time
+current_time = str(calendar.timegm(time.gmtime()))
+table_name = 'video_track_points_local' + current_time
 
+def dump_file(path):
+    # path = 'MyFile.txt'
+    f = open(path, 'r')
+    flag = False
+    for i in f:
+        if flag is False:
+            temp = i
+            temp = json.loads(temp)
+            flag = True
+        else:
+            temp.update({'table_name': i})
+    f.close()
+    f = open(path, 'w')
+    f.write(json.dumps(temp))
+    f.close()
 
+# current_time = str(calendar.timegm(time.gmtime()))
+# table_name = 'video_track_points_local' + current_time
 def get_link():
     file=open('./server.txt','r')
     server=file.read()
@@ -190,17 +211,25 @@ class Auxilary:
         database_tables = self.db.DbResultsQuery(query)
         database_tables_list = [i[0] for i in database_tables]
         if "video_track_points_local" not in database_tables_list:
-            query = '''CREATE TABLE if not exists video_track_points_local
-                    (
-                        geom geometry,
-                        datetime timestamp without time zone,
-                        viewing_direction double precision,
-                        completion_status boolean,
-                        file_dir_name text COLLATE pg_catalog."default",
-                        surveyor_id text,
-                        added_on timestamp without time zone
-                    )'''
-            self.db.DbModifyQuery(query)
+            try:
+                query = f'''CREATE TABLE if not exists {table_name}
+                        (
+                            geom geometry,
+                            datetime timestamp without time zone,
+                            viewing_direction double precision,
+                            completion_status boolean,
+                            file_dir_name text COLLATE pg_catalog."default",
+                            surveyor_id text,
+                            added_on timestamp without time zone
+                        )'''
+                self.db.DbModifyQuery(query)
+                f = open("TableLimit.txt", "w")
+                f.write(str(True))
+                f.close()
+            except Exception as e:
+                f = open("TableLimit.txt", "w")
+                f.write(str(e))
+                f.close()
 
         for row in self.rows:
             lat = row[0]
@@ -233,7 +262,7 @@ class Auxilary:
             #
             print("file_dir ",vid_path)
             table_names = self.db.DbModifyQuery("SELECT tablename FROM pg_catalog.pg_tables;")
-            self.db.DbModifyQuery("insert into video_track_points_local (geom,datetime,viewing_direction,"
+            self.db.DbModifyQuery(f"insert into {table_name} (geom,datetime,viewing_direction,"
                                   "completion_status,file_dir_name,surveyor_id,added_on) "
                                   "values (st_transform(ST_SetSRID(ST_MakePoint(%s, %s),4326),3857),%s,%s,%s,%s,%s,"
                                   "now())", (long, lat, time, heading, False, vid_path, name_to_add))
@@ -302,12 +331,33 @@ class Auxilary:
                 print(command)
                 subprocess.call(command, shell=True)
 
+def dump_file(path):
+    # path = 'MyFile.txt'
+    f = open(path, 'r')
+    flag = False
+    for i in f:
+        if flag is False:
+            temp = i
+            temp = json.loads(temp)
+            flag = True
+        else:
+            temp.update({'table_name': i})
+    f.close()
+    f = open(path, 'w')
+    f.write(json.dumps(temp))
+    f.close()
 
 if __name__ == '__main__':
     main_ = main.Main()
     main.Srt_List_final()
     try:
-        json_=json.dumps({"postgres": 'mysecretpassword'})
+        file1 = open("MyFile.txt", "w")
+        cred = sys.argv[2]
+        temp = {"table_name": 200}
+        file1.write(sys.argv[2] + '\n' + table_name)
+        file1.close()
+        dump_file('MyFile.txt')
+        #json_=json.dumps({"postgres": 'mysecretpassword'})
         print("main ",main_)
         # print("This is salman ", sys.argv[1])
         print("This is golbal path ",Variable.Srt_Path)

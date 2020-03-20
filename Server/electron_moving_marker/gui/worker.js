@@ -11,6 +11,7 @@ var folder = 'electron_videos/'
 var authenticity = false;
 var localurl;
 var serverUrl;
+new_locations=null;
 var inserting_srt_flag = false
 //var serverUrl = 'http://172.16.130.52:8009/'+folder
 //var serverUrl = 'http://172.16.130.52:8009/'+folder
@@ -38,8 +39,8 @@ var Icon = L.DivIcon.extend({
 console.log('check 2')
 var icon = new Icon();
 function parse_json(text) {
+    video = document.getElementById('my_video_1');
     console.log('parse_json')
-
     geojson = JSON.parse(text);
     map.setView(geojson.start,17);
     locations = geojson.line
@@ -47,6 +48,56 @@ function parse_json(text) {
     line  = geojson.linestring;
     durations = geojson.duration;
     map.addLayer(L.polyline(line));
+    var polyline = L.polyline(line)
+    map.on('click',onLineClick)
+    console.log('line',line)
+    console.log('locations',locations)
+    console.log('polyline',polyline)
+    function onLineClick(e){
+      console.log('Map clicked')
+      //clicked lat longs
+      var lat = e.latlng.lat
+      var lng = e.latlng.lng
+      let closest_latlng = L.GeometryUtil.closest(map, polyline, [lat, lng])
+      //nearest snapped lat longs
+      var closest_lat  = closest_latlng.lat
+      var closest_lng  = closest_latlng.lng
+
+
+      console.log('closest',closest_lat,closest_lng)
+       //removing marker if it exists
+//      if (marker){
+//        map.removeLayer(marker)
+//      }
+      line.find(function(element, index){
+        if (element[0].toFixed(4)==closest_lat.toFixed(4) || element[1].toFixed(4)==closest_lng.toFixed(4)){
+        console.log("Found" , element , index)
+        map.removeLayer(marker)
+        video.currentTime=index
+        if (marker){
+        map.removeLayer(marker)
+        }
+        marker = L.movingMarker([closest_lat,closest_lng],{icon: icon}).addTo(map);
+//        map.setView(L.latLng(closest_lat, closest_lat))
+        }
+      })
+  //-- placing new marker on the nearest point of line
+      var given_line = new_locations
+      console.log('given_line',given_line)
+//      marker = L.marker([closest_lat,closest_lng],{icon: icon}).addTo(map);
+
+//    marker = L.marker([closest_lat,closest_lng]).addTo(map)
+      console.log('clicked',lat,lng)
+      console.log('marker',marker)
+
+    }
+    // end of click function
+//    myMovingMarker = L.Marker.movingMarker(geojson.line, geojson.duration, { icon: myIcon }).addTo(map);
+
+//    console.log(line)
+
+
+
 //    myMovingMarker = L.Marker.movingMarker(geojson.line, geojson.duration, { icon: myIcon }).addTo(map);
 
 //    console.log(line)
@@ -205,6 +256,7 @@ function video_seeked() {
     }
     console.log('video_seeked')
 //    console.log(line)
+    var new_locations
     var video = document.getElementById('my_video_1');
     var time_index = Math.floor(video.currentTime - 2);
     var new_locations = locations.slice(time_index)
@@ -239,13 +291,13 @@ function databaseFields(){
     fs.readFile('auth.txt', (err, data) => {
     if (err) throw err;
     console.log(data.toString())
-    if(data.toString()=="False"){
+    if(data.toString()!="True"){
     console.log('check if')
 //    alert('Wrong Database Credentials')
       Swal.fire({
       icon: 'error',
       title: 'Oops...',
-      text: 'Wrong Database Credentials!',
+      text: data,
     })
     }
     else{
@@ -301,15 +353,32 @@ let options1_2 = {
         pythonPath: 'python',
         args: ['', JSON.stringify(dbCredentials)]
     };
+    const fs = require('fs')
+
 
     console.log('options1_2')
     console.log(options1_2['args'])
     PythonShell.run('Server/electron_moving_marker/csv to srt/csv_srt_converter.py',options1_2,  function  (err, results)  {
+    fs.readFile('TableLimit.txt', (err, data) => {
+    if (err) throw err;
+    console.log(data.toString())
+    if(data.toString()!="True"){
+    console.log('check if')
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: data,
+    })
+    }
+//    else{
+//    console.log('Table Limit Error')
+//
+//    }
+})
     Swal.close()
 //    alert('SRT Files Inserted')
     srtFilesInsertedAlert();
 
-    const fs = require('fs')
     fs.readFile('list.txt', (err, data) => {
     var mylist = []
     if (err) throw err;
@@ -452,6 +521,7 @@ function start_work() {
       marker = null
     }
 
+    var new_locations
     var video = document.getElementById('my_video_1');
     video.loop = false;
     video.autoplay = false;

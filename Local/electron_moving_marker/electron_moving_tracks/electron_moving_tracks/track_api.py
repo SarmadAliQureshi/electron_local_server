@@ -12,6 +12,14 @@ import json
 import ast
 import sys
 
+path=os.path.abspath(os.curdir)
+file1 = open(path+"\\MyFile.txt", "r")
+temp=json.load(file1)
+print(temp)
+table_  = temp['table_name']
+file1.close()
+# table_ = "video_track_points_local1583152229"
+
 cors = CORS(allow_all_origins=True, allow_all_headers=True, allow_credentials_all_origins=True, allow_all_methods=True)
 directory = os.path.dirname(__file__)
 configs_dict = json.loads(sys.argv[1])
@@ -46,15 +54,17 @@ class Tracker:
         return leaflet_coords
 
     def get_duration(self, limit: int, fname: str) -> tuple:
+
         try:
             # by using the variable on which database connection was stored, i.e. main_database database is queried-
             # -duration_query from the configuratio.py file run on the filename, i.e. fname
             # in db_response variable we get the duration time of the video
-            db_response = main_database.DbResultsQuery(conf.duration_query.format(fname))
+            db_response = main_database.DbResultsQuery(conf.duration_query.format(fname,table_))
         except INTERNAL_ERROR:
             main_database.refreshDbConenction()
-            db_response = main_database.DbResultsQuery(conf.duration_query.format(fname))
+            db_response = main_database.DbResultsQuery(conf.duration_query.format(fname,table_))
         # This is the print of db_response[0][0] -- 0:20:17 i.e. duration_min variable value
+        print("duration",conf.duration_query)
         duration_min = db_response[0][0]  #duration in minutes
         # Convert minutes into seconds
         duration_sec = int(duration_min.seconds)
@@ -68,13 +78,16 @@ class Tracker:
 
         # parse file name with path in the variable fname
         fname = params['fname']
+        conf.fname=fname
+        print("fileName",fname)
 
         try:
+            print("query",conf.track_query)
             # in db_response variable we get the results( linestring, length )from the track_query which is written in configuration file
-            db_response = main_database.DbResultsQuery(conf.track_query.format(fname))
+            db_response = main_database.DbResultsQuery(conf.track_query.format(fname,table_))
         except INTERNAL_ERROR:
             main_database.refreshDbConenction()
-            db_response = main_database.DbResultsQuery(conf.track_query.format(fname))
+            db_response = main_database.DbResultsQuery(conf.track_query.format(fname,table_))
         # db_response is in form of tuple (line,length) so we have to fetch line only and store it in variable track_geojson
         # print(db_response)
         track_geojson = json.loads(db_response[0][0])
@@ -91,8 +104,8 @@ class Tracker:
         start_point = [track_geojson['coordinates'][0][1], track_geojson['coordinates'][0][0]]
         # end_point = [track_geojson['coordinates'][-1][1], track_geojson['coordinates'][-1][0]]
         duration, duration_seconds = self.get_duration(limit=len(track_list)-1, fname=fname) ## duration= dur_list
-        bearing = main_database.DbResultsQuery(conf.bearing.format(fname))
-        datetime = main_database.DbResultsQuery(conf.datetime.format(fname))
+        bearing = main_database.DbResultsQuery(conf.bearing.format(fname,table_))
+        datetime = main_database.DbResultsQuery(conf.datetime.format(fname,table_))
         print("date , ",datetime)
         print("track ", track_list)
         li=[{"lat":v[0],"recorded_at_ms":datetime[i][0]*1000,"lng":v[1],"bearing":bearing[i][0]} for i,v in enumerate(track_list)]
@@ -121,12 +134,37 @@ class Tracker:
             resp.status = falcon.HTTP_401
         resp.media = output
 
+class Exitor:
+    #this api required only one parameter which is the name of the video file
+
+    def _handleQuery(self):
+        # Do something here
+
+        # parse file name with path in the variable fname
+        print("yes")
+
+    def on_get(self, req, resp) -> None:
+        """Handles GET requests"""
+        global main_database
+        global table_
+        params = req.params
+
+        main_database.DbModifyQuery(f'drop table {table_}')
+        main_database.releaseDbConnection()
+        resp.media = {"Success": "Table removed!","table":table_ }
+
+    def on_post(self, req, resp) -> None:
+        """Handles POST requests"""
+        pass
+
 
 if __name__ == '__main__':
 
     api = falcon.API(middleware=[cors.middleware])
     ## run Tracker class from the main
     api.add_route('/videotrack', Tracker())
+    #api.add_route('/exit', Exitor())
+
     serve(api, host='localhost', port=8006)
 
 # http://172.16.130.116:8006/videotrack?fname=http://172.16.130.52:8009/processed_videos/10000_VID_20190729_130815.mkv

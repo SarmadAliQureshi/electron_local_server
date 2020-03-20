@@ -14,14 +14,33 @@ import datetime
 import sys
 from time import time
 import json
-
-
+import calendar
+import time
 # old_stdout = sys.stdout
 # log_file = open("message.log","w")
 # sys.stdout = log_file
 # self.provided_dir = sys.argv[1].split(str(os.sep))[:-1].join(str(os.sep))
 # self.provided_dir = sys.argv[0]
 # print(self.provided_dir)
+current_time = str(calendar.timegm(time.gmtime()))
+table_name = 'video_track_points_local' + current_time
+
+import json
+def dump_file(path):
+    # path = 'MyFile.txt'
+    f = open(path, 'r')
+    flag = False
+    for i in f:
+        if flag is False:
+            temp = i
+            temp = json.loads(temp)
+            flag = True
+        else:
+            temp.update({'table_name': i})
+    f.close()
+    f = open(path, 'w')
+    f.write(json.dumps(temp))
+    f.close()
 
 class Auxilary:
     def __init__(self, provided_dir, configs_dict):
@@ -29,6 +48,7 @@ class Auxilary:
         self.compressed_video_names = []
         self.provided_dir = provided_dir
         self.configs_dict = json.loads(configs_dict)
+
         self.db = DbConfig(self.configs_dict['ip'],
                            self.configs_dict['dbname'],
                            self.configs_dict['port'],
@@ -180,8 +200,10 @@ class Auxilary:
         query = "SELECT tablename FROM pg_catalog.pg_tables;"
         database_tables = self.db.DbResultsQuery(query)
         database_tables_list = [i[0] for i in database_tables]
-        if "video_track_points_local" not in database_tables_list:
-            query = '''CREATE TABLE if not exists video_track_points_local
+
+        # if "video_track_points_local" not in database_tables_list:
+        try:
+            query = f'''CREATE TABLE if not exists {table_name}
                     (
                         geom geometry,
                         datetime timestamp without time zone,
@@ -192,6 +214,13 @@ class Auxilary:
                         added_on timestamp without time zone
                     )'''
             self.db.DbModifyQuery(query)
+            f = open("TableLimit.txt", "w")
+            f.write(str(True))
+            f.close()
+        except Exception as e:
+            f = open("TableLimit.txt", "w")
+            f.write(str(e))
+            f.close()
 
         for row in self.rows:
             lat = row[0]
@@ -224,7 +253,7 @@ class Auxilary:
             #
 
             table_names = self.db.DbModifyQuery("SELECT tablename FROM pg_catalog.pg_tables;")
-            self.db.DbModifyQuery("insert into video_track_points_local (geom,datetime,viewing_direction,"
+            self.db.DbModifyQuery(f"insert into {table_name} (geom,datetime,viewing_direction,"
                                   "completion_status,file_dir_name,surveyor_id,added_on) "
                                   "values (st_transform(ST_SetSRID(ST_MakePoint(%s, %s),4326),3857),%s,%s,%s,%s,%s,"
                                   "now())", (long, lat, time, heading, False, vid_path, name_to_add))
@@ -294,10 +323,23 @@ class Auxilary:
                 subprocess.call(command, shell=True)
 
 
+
+
 if __name__ == '__main__':
+
+
+
     try:
-        # print("This is salman ", sys.argv[1])
+
+        file1 = open("MyFile.txt", "w")
+        cred = sys.argv[2]
+        temp={"table_name":200}
+        file1.write(sys.argv[2] +'\n'+table_name)
+        file1.close()
+        dump_file('MyFile.txt')
+
         aux = Auxilary(sys.argv[1], sys.argv[2])
+
         if conf.processing == 'all' or conf.processing == 'srt':
             aux.video_files_corrector()
         # if conf.processing == 'all' or conf.processing == 'compression':

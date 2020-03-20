@@ -1,6 +1,5 @@
 //var Tangram = require('tangram')
 var locations = []
-var playVideo = false
 var marker = null;
 var line = null;
 var duration = null;
@@ -9,7 +8,7 @@ var video_paused = false
 authenticity=false
 var check_secondexecution = false
 var enter_database_credentials = false
-
+var video = null;
 
 
 function rightDatabaseCredentialsAlert(){
@@ -101,11 +100,58 @@ function parse_json(text) {
 //        marker=null
     }
 
+    map.setView(geojson.start,17);
+    locations = geojson.line
     locations = geojson.line
     console.log('above second execution')
     line  = geojson.linestring;
+
     durations = geojson.duration;
     map.addLayer(L.polyline(line));
+    var polyline = L.polyline(line)
+    map.on('click',onLineClick)
+    console.log('line',line)
+    console.log('locations',locations)
+    console.log('polyline',polyline)
+    function onLineClick(e){
+      console.log('Map clicked')
+      //clicked lat longs
+      var lat = e.latlng.lat
+      var lng = e.latlng.lng
+      let closest_latlng = L.GeometryUtil.closest(map, polyline, [lat, lng])
+      //nearest snapped lat longs
+      var closest_lat  = closest_latlng.lat
+      var closest_lng  = closest_latlng.lng
+
+
+      console.log('closest',closest_lat,closest_lng)
+       //removing marker if it exists
+//      if (marker){
+//        map.removeLayer(marker)
+//      }
+      line.find(function(element, index){
+        if (element[0].toFixed(4)==closest_lat.toFixed(4) || element[1].toFixed(4)==closest_lng.toFixed(4)){
+        console.log("Found" , element , index)
+        map.removeLayer(marker)
+        video.currentTime=index
+        if (marker){
+        map.removeLayer(marker)
+        }
+        marker = L.movingMarker([closest_lat,closest_lng],{icon: icon}).addTo(map);
+//        map.setView(L.latLng(closest_lat, closest_lat))
+        }
+      })
+  //-- placing new marker on the nearest point of line
+      var given_line = new_locations
+      console.log('given_line',given_line)
+//      marker = L.marker([closest_lat,closest_lng],{icon: icon}).addTo(map);
+
+//    marker = L.marker([closest_lat,closest_lng]).addTo(map)
+      console.log('clicked',lat,lng)
+      console.log('marker',marker)
+
+    }
+    // end of click function
 //    myMovingMarker = L.Marker.movingMarker(geojson.line, geojson.duration, { icon: myIcon }).addTo(map);
 
 //    console.log(line)
@@ -140,7 +186,7 @@ marker = L.movingMarker([given_line[0].lat, given_line[0].lng], {
     }),
     icon: icon,
 });
-marker.pause()
+//marker.pause()
 if (check_secondexecution==false)
 {
     video_paused = true
@@ -171,12 +217,20 @@ marker.addTo(map);
 //marker.pause();
 z=18
 z = map.getZoom()
-map.setView(L.latLng(given_line[0].lat, given_line[0].lng), z);
-pause_vid()
+//map.setView(L.latLng(given_line[0].lat, given_line[0].lng));
+if (video_paused==true){
+    pause_vid();
+}
+else if (video_paused==false){
+    console.log('TRYING TO STOP!')
+//    marker.start();
+    play_vid();
+    video.play();
+}
+
 }
 
 function pause_vid() {
-//    playVideo = false
 //    myMovingMarker.pause();
 //    playing = false;
       video_paused = true;
@@ -191,21 +245,43 @@ function end_vid(){
 
 function play_vid() {
       video_paused = false;
+
       marker.start()
 
 }
-
+var new_locations
+var video = document.getElementById('my_video_1');
 function video_seeked() {
     if (video_paused==true){
-    check_secondexecution = false
+        check_secondexecution = false
     }
     console.log('video_seeked')
 //    console.log(line)
     var video = document.getElementById('my_video_1');
     var time_index = Math.floor(video.currentTime - 2);
-    var new_locations = locations.slice(time_index)
+    console.log('video.currentTime',video.currentTime)
+    console.log('time_index',time_index)
+    new_locations = locations.slice(time_index)
     map.removeLayer(marker)
+    marker = null;
+    console.log('locations',locations)
+    console.log('new_locations',new_locations)
+    new_locations.map(function(item, index, array) {
+    var duration = index === 0 ? 1000 : item.recorded_at_ms - array[index - 1].recorded_at_ms;
+            console.log('Item',item)
+            console.log('duration',duration)
+            console.log('bearing',item.bearing)
+
+            return {
+                latLng: [item.lat, item.lng],
+                duration: duration,
+                bearing: item.bearing,
+            };
+        }),
+        console.log('duration',duration)
+
     secondexecution(new_locations)
+
 //    console.log(time_index,time_index,new_line)
 //    var new_durations = durations.slice(time_index)
 //
@@ -235,12 +311,12 @@ function databaseFields(){
     fs.readFile('auth.txt', (err, data) => {
     if (err) throw err;
     console.log(data.toString())
-    if(data.toString()=="False"){
+    if(data.toString()!="True"){
     console.log('check if')
     Swal.fire({
       icon: 'error',
       title: 'Oops...',
-      text: 'Wrong Database Credentials!',
+      text: data,
     })
     }
     else{
@@ -326,6 +402,22 @@ function directorySelected() {
     insertionAlert();
     PythonShell.run('Local/electron_moving_marker/csv to srt/csv_srt_converter.py',options1_2,  function  (err, results)  {
 //    alert('SRT Files Inserted')
+    fs.readFile('TableLimit.txt', (err, data) => {
+    if (err) throw err;
+    console.log(data.toString())
+    if(data.toString()!="True"){
+    console.log('check if')
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: data,
+    })
+    }
+//    else{
+//    console.log('Table Limit Error')
+//
+//    }
+})
     Swal.close()
 ////    alert('SRT Files Inserted')
     srtFilesInsertedAlert();
@@ -393,7 +485,7 @@ function start_work() {
 //      console.log('marker after null ',marker)
     }
 
-    var video = document.getElementById('my_video_1');
+    video = document.getElementById('my_video_1');
     video.loop = false;
     video.autoplay = false;
     var video_name = document.getElementById('menu').value;
@@ -531,8 +623,3 @@ durations = null;
 // myPlayer = videojs('my_video_1', {}, function() {});
 
 // var myPlayer = document.getElementById('my_video_1');
-
-
-
-
-

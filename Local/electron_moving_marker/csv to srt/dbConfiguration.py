@@ -22,7 +22,7 @@ class DbConfig:
             return True
         except Exception as e:
             print(e)
-            return False
+            return e
 
     def returnedFormattedQuery(self, query, vare = None):
         cursor = self.conn.cursor()
